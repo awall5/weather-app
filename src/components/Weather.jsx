@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './Weather.css'
+console.log("API KEY IS:", import.meta.env.VITE_APP_ID);
+
 
 import search_icon from '../assets/search.png'
 import clear_icon from '../assets/clear.png'
@@ -32,7 +34,9 @@ const Weather = () => {
   const search = async (city) => {
     try {
       setLoading(true);
-      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${import.meta.env.VITE_APP_ID}`;
+      // const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${import.meta.env.VITE_APP_ID}`;
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=874cd53d2438f5d92d56eaca204be26f`;
+
       const response = await fetch(url);
       const data = await response.json();
       if (data.cod !== 200) throw new Error(data.message);
