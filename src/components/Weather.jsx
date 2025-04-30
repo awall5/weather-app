@@ -34,20 +34,40 @@ const Weather = () => {
   const search = async (city) => {
     try {
       setLoading(true);
-      // const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${import.meta.env.VITE_APP_ID}`;
-      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=874cd53d2438f5d92d56eaca204be26f`;
 
+      const geoRes = await fetch(
+        `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=874cd53d2438f5d92d56eaca204be26f`
+      );
+      const geoData = await geoRes.json();
+      if (!geoData.length) throw new Error("City not found");
+
+      const { lat, lon, name } = geoData[0];
+
+      const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=874cd53d2438f5d92d56eaca204be26f`;
       const response = await fetch(url);
       const data = await response.json();
       if (data.cod !== 200) throw new Error(data.message);
 
       const icon = allIcon[data.weather[0].icon] || clear_icon;
 
+      const countryToCapital = {
+        "south korea": "Seoul",
+        "india": "New Delhi",
+        "usa": "Washington",
+        "canada": "Ottawa",
+        "uk": "London",
+        "australia": "Canberra",
+      };
+      const fallbackCity = countryToCapital[city.toLowerCase()] || city;
+
+
+
+
       setWeatherData({
         humidity: data.main.humidity,
         windSpeed: data.wind.speed,
         tempreature: Math.floor(data.main.temp),
-        location: data.name,
+        location: name, // Use clean name from geoData
         icon,
       });
 
@@ -56,13 +76,13 @@ const Weather = () => {
         setRecentSearches(updatedSearches);
         localStorage.setItem("recentSearches", JSON.stringify(updatedSearches));
       }
-
     } catch (error) {
       console.error("Error:", error.message);
     } finally {
       setLoading(false);
     }
   };
+
 
   const handleSearch = (e) => {
     if (e.key === 'Enter') {
