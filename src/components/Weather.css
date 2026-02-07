@@ -115,21 +115,30 @@ body {
 
 .search-bar input {
     flex: 1;
-    height: 55px;
+    height: 45px;
     border: 2px solid transparent;
     outline: none;
     border-radius: 50px;
-    padding: 0 25px;
-    color: var(--text-main);
-    background: rgba(255, 255, 255, 0.9);
-    font-size: 16px;
+    padding: 0 20px;
+    color: #333;
+    background: rgba(255, 255, 255, 0.95);
+    font-size: 14px;
     font-weight: 500;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
 }
 
 .search-bar input::placeholder {
-    color: #999;
+    color: #bbb;
+}
+
+.weather.dark .search-bar input {
+    color: #fff;
+    background: rgba(60, 60, 60, 0.9);
+}
+
+.weather.dark .search-bar input::placeholder {
+    color: #888;
 }
 
 .search-bar input:focus {
