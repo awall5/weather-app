@@ -4,6 +4,10 @@
     --text-main: #333;
     --button-hover: #d8f3ef;
     --loader-color: #00c6ff;
+    --accent-primary: #00d4ff;
+    --accent-secondary: #ff6b9d;
+    --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.15);
+    --shadow-md: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
 body {
@@ -15,7 +19,7 @@ body {
     min-height: 100vh;
     font-family: 'Poppins', sans-serif;
     transition: background 0.5s ease-in-out;
-    background: linear-gradient(to bottom right, #d8b4fe, #f0e7ff);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
     overflow: hidden;
 }
 
@@ -80,92 +84,163 @@ body {
 .weather {
     position: relative;
     place-self: center;
-    padding: 40px;
-    border-radius: 20px;
-    background: var(--bg-card);
+    padding: 30px;
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
     display: flex;
     flex-direction: column;
     align-items: center;
     color: var(--text-main);
-    transition: background 0.3s, color 0.3s;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+    box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.6);
     max-width: 420px;
     width: 90%;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.weather.dark {
+    background: rgba(42, 42, 42, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .search-bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
+    gap: 10px;
     width: 100%;
-    margin-top: 20px;
+    margin-top: 0;
 }
 
 .search-bar input {
     flex: 1;
-    height: 50px;
-    border: none;
+    height: 55px;
+    border: 2px solid transparent;
     outline: none;
-    border-radius: 40px;
-    padding-left: 20px;
+    border-radius: 50px;
+    padding: 0 25px;
     color: var(--text-main);
-    background: var(--bg-main);
+    background: rgba(255, 255, 255, 0.9);
     font-size: 16px;
-    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
-    transition: background 0.3s, color 0.3s;
+    font-weight: 500;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.search-bar input::placeholder {
+    color: #999;
+}
+
+.search-bar input:focus {
+    border-color: var(--accent-primary);
+    box-shadow: 0 8px 25px rgba(0, 212, 255, 0.2);
+    background: #ffffff;
 }
 
 .search-bar img {
-    width: 50px;
-    padding: 12px;
+    width: 55px;
+    padding: 0;
     border-radius: 50%;
-    background: var(--bg-main);
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
     cursor: pointer;
-    transition: background 0.3s;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 15px;
 }
 
 .search-bar img:hover {
-    background: var(--button-hover);
+    transform: scale(1.1) rotate(10deg);
+    box-shadow: 0 8px 25px rgba(0, 212, 255, 0.3);
+}
+
+.search-bar img:active {
+    transform: scale(0.95);
 }
 
 .weather-icon {
-    width: 150px;
-    margin: 30px 0;
+    width: 120px;
+    height: 120px;
+    margin: 20px 0 15px 0;
+    animation: floatIcon 3s ease-in-out infinite;
+    filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.15));
+}
+
+@keyframes floatIcon {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
 }
 
 .temperature {
-    font-size: 80px;
+    font-size: 70px;
+    font-weight: 700;
     line-height: 1;
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 10px 0;
 }
 
 .location {
-    font-size: 40px;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 5px;
+    letter-spacing: -0.5px;
 }
 
 .weather-data {
     width: 100%;
-    margin-top: 40px;
-    display: flex;
-    justify-content: space-between;
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    padding: 18px;
+    background: rgba(102, 126, 234, 0.08);
+    border-radius: 20px;
+    border: 1px solid rgba(102, 126, 234, 0.15);
 }
 
 .weather-data .col {
     display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    font-size: 22px;
+    align-items: center;
+    gap: 15px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.weather-data .col > div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+5px solid rgba(0, 212, 255, 0.2);
+    border-top: 5px solid var(--loader-color);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 0.9s linear infinite;
+    margin: 60px auto;
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3)d-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .weather-data .col span {
     display: block;
-    font-size: 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0;
 }
 
 .weather-data .col img {
-    width: 26px;
-    margin-top: 10px;
+    width: 40px;
+    height: 40px;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
 }
 
 .loader {
@@ -190,43 +265,72 @@ body {
 
 .recent-searches {
     width: 100%;
-    margin-top: 30px;
+    margin-top: 20px;
     text-align: center;
 }
 
 .recent-searches h3 {
-    font-size: 20px;
-    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #555;
 }
 
 .search-tags {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 10px;
+    gap: 12px;
+    margin-top: 15px;
 }
 
 .search-tags button {
-    background-color: var(--bg-main);
-    border: none;
-    padding: 8px 14px;
-    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(240, 147, 251, 0.1));
+    border: 2px solid rgba(102, 126, 234, 0.3);
+    padding: 10px 18px;
+    border-radius: 25px;
     color: var(--text-main);
-    font-weight: 500;
+    font-weight: 600;
+    font-size: 14px;
     cursor: pointer;
-    transition: all 0.2s ease-in-out;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
 .search-tags button:hover {
-    background-color: var(--button-hover);
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    border-color: transparent;
+    color: whitelinear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(240, 147, 251, 0.2));
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
 }
 
-.theme-toggle {
-    position: absolute;
-    top: 20px;
-    right: 20px;
+.theme-toggle:hover {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    border-color: transparent;
+    box-shadow: 0 8px 25px rgba(0, 212, 255, 0.3);
+    transform: rotate(180deg);
+}
+
+.theme-toggle img {
+    width: 24px;
+    height: 24px;
+    filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.3));
+    transition: transform 0.2s ease-in-out;
+}
+
+.theme-toggle img:hover {
+    transform: scale(1.1
     background: none;
     border: none;
     cursor: pointer;
@@ -235,19 +339,19 @@ body {
 
 .theme-toggle img {
     width: 32px;
-    filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.3));
-    transition: transform 0.2s ease-in-out;
+    filter: 50px;
+    height: 350px;
+    background: radial-gradient(circle, rgba(240, 147, 251, 0.8), rgba(240, 147, 251, 0));
+    top: 5%;
+    left: -5%;
 }
 
-.theme-toggle img:hover {
-    transform: rotate(25deg);
-}
-
-.weather-bg-decor {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
+.blob2 {
+    width: 450px;
+    height: 450px;
+    background: radial-gradient(circle, rgba(102, 126, 234, 0.8), rgba(102, 126, 234, 0));
+    bottom: -5%;
+    right: -
     left: 0;
     overflow: hidden;
     z-index: 0;

@@ -125,48 +125,69 @@ const Weather = () => {
 
   return (
     <div className={`weather ${darkMode ? 'dark' : ''}`}>
+      <button className="theme-toggle" onClick={toggleDarkMode} title="Toggle dark mode">
+        <img src={darkMode ? sun_icon : moon_icon} alt="Toggle theme" />
+      </button>
+
       <div className='top-bar'>
         <div className='search-bar'>
-          <input type="text" placeholder='Search' onKeyDown={handleSearch} />
-          <img src={search_icon} alt="Search" onClick={handleVoiceSearch} />
+          <input 
+            type="text" 
+            placeholder='Search for a city...' 
+            onKeyDown={handleSearch}
+            autoComplete="off"
+          />
+          <img 
+            src={search_icon} 
+            alt="Voice search" 
+            onClick={handleVoiceSearch}
+            title="Click to search by voice"
+          />
         </div>
-        <button className="theme-toggle" onClick={toggleDarkMode}>
-          <img src={darkMode ? sun_icon : moon_icon} alt="Toggle theme" />
-        </button>
       </div>
 
       {loading ? (
         <div className="loader"></div>
       ) : weatherData ? (
         <>
-          <img src={weatherData.icon} alt="Weather" className='weather-icon' />
-          <p className='temperature'>{weatherData.tempreature}°c</p>
+          <img src={weatherData.icon} alt="Weather icon" className='weather-icon' />
+          <p className='temperature'>{weatherData.tempreature}°</p>
           <p className='location'>{weatherData.location}</p>
           <div className="weather-data">
             <div className="col">
-              <img src={humidity_icon} alt="" />
+              <img src={humidity_icon} alt="Humidity icon" />
               <div>
-                <p>{weatherData.humidity} %</p>
+                <p>{weatherData.humidity}%</p>
                 <span>Humidity</span>
               </div>
             </div>
             <div className="col">
-              <img src={wind_icon} alt="" />
+              <img src={wind_icon} alt="Wind speed icon" />
               <div>
-                <p>{weatherData.windSpeed}km/h</p>
-                <span>Wind Speed</span>
+                <p>{weatherData.windSpeed}</p>
+                <span>Wind km/h</span>
               </div>
             </div>
           </div>
         </>
-      ) : null}
+      ) : (
+        <div style={{ textAlign: 'center', padding: '40px 0', color: 'var(--text-main)' }}>
+          <p style={{ fontSize: '18px', marginBottom: '10px' }}>Search for a city to see the weather</p>
+        </div>
+      )}
 
       {recentSearches.length > 0 && (
         <div className="recent-searches">
           <h3>Recent Searches</h3>
           <div className="search-tags">
             {recentSearches.map((city, i) => (
-              <button key={i} onClick={() => search(city)}>{city}</button>
+              <button 
+                key={i} 
+                onClick={() => search(city)}
+                title={`Search for ${city}`}
+              >
+                {city}
+              </button>
             ))}
           </div>
         </div>
