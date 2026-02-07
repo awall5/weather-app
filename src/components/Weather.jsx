@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import './Weather.css'
-console.log("API KEY IS:", import.meta.env.VITE_APP_ID);
-
 
 import search_icon from '../assets/search.png'
 import clear_icon from '../assets/clear.png'
